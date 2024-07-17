@@ -18,7 +18,8 @@ dotenv.config();
 
 
 const corsOptions = {
-    origin: 'https://ecart-shopping.netlify.app', 
+    origin: ['https://ecart-shopping.netlify.app', 'https://www.ecart-shopping.netlify.app'],
+
     credentials: true, 
 };
 
@@ -27,11 +28,10 @@ const corsOptions = {
 const app=express();
 app.use(cors(corsOptions));
 
-app.use(express.static('public'));
 
 app.use(express.json());
 app.use(cookieParser()); 
-
+app.use(express.static('public'));
 
 
 //database connection
@@ -52,7 +52,14 @@ app.use("/api/order/v1" ,isAuthorized,OrderRouter)
 
 app.get("/",(req,res)=>{
     return res.status(200).send("server working");
-})
+});
+
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 
 
