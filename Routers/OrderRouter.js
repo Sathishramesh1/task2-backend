@@ -9,7 +9,7 @@ dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 
-const YOUR_DOMAIN = 'http://localhost:5173';
+const YOUR_DOMAIN = 'https://ecart-shopping.netlify.app';
 
 
 
