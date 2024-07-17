@@ -18,7 +18,7 @@ dotenv.config();
 
 
 const corsOptions = {
-    origin: 'https://ecart-shopping.netlify.app/', 
+    origin: 'https://ecart-shopping.netlify.app', 
     credentials: true, 
 };
 
