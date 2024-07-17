@@ -25,7 +25,7 @@ router.route('/create-checkout-session').post(async (req, res) => {
 
     const { amount } = req.body;
 
-    const cart= await Cart.findOne({user:req.user._id}).populate('items');
+    
     
 
     const session = await stripe.checkout.sessions.create({

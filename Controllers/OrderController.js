@@ -6,11 +6,11 @@ import { Orders } from '../model/Order.js';
 
 //function place order
 const placeOrder = async (req, res) => {
+    
     try {
-
-        //getting _id from middleware
+       //getting _id from middleware
         const userId = req.user._id; 
-        const cart = await Cart.findOne({ user: userId });
+        const cart = await Cart.findOne({ user: userId }).populate('items');
 
         if (!cart || cart.items.length === 0) {
             return res.status(400).json({ message: "Cart is empty or not found" });
@@ -19,7 +19,11 @@ const placeOrder = async (req, res) => {
         // creating new order
         const newOrder = new Orders({
             user: userId,
-            items: cart.items,
+            items:cart.items.map(item => ({
+                product: item.product._id,
+                quantity: item.quantity,
+                price: item.product.price 
+            })),
             totalAmount: cart.totalAmount,
             
         });
