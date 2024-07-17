@@ -24,7 +24,7 @@ const jwttoken = jwt.sign({id:user._id}, process.env.SECRET_KEY,{ expiresIn: '1h
 
 res.cookie('x-auth-token', jwttoken, {
     httpOnly: true, 
-    secure:false, 
+    secure:true, 
     sameSite: 'Strict', 
     maxAge: 3600000 
 });
