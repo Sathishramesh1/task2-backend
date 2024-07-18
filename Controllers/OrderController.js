@@ -49,9 +49,10 @@ const placeOrder = async (req, res) => {
 export { placeOrder };
 
 
-const getOrder=async(res,req)=>{
-    try {
 
+//to get the order completed payment
+const getOrder=async(req,res)=>{
+    try {
         const userId = req.user._id; 
         const order= await Orders.find({user:userId});
 
