@@ -15,7 +15,7 @@ const placeOrder = async (req, res) => {
         // Create array of items for the order
         const items = cart.items.map(item => ({
             product: {
-                id: item.product._id,
+                id: item.product.id,
                 image: item.product.image,
                 title: item.product.title,
                 price: item.product.price,
