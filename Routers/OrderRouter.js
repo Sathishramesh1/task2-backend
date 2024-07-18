@@ -31,12 +31,7 @@ router.route('/create-checkout-session').post(async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
 
-        customer_email: 'customer@example.com',
-    submit_type: 'donate',
-    billing_address_collection: 'auto',
-    shipping_address_collection: {
-      allowed_countries: ['US', 'CA'],
-    },
+       
       line_items: [
         {
             price_data: {
