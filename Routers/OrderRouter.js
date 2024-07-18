@@ -77,7 +77,7 @@ router.route('/create-checkout-session').post(async (req, res) => {
   
 
 
-router.route("/order-history").get(getOrder);
+router.route('/order-history').get(getOrder);
 
 
 
