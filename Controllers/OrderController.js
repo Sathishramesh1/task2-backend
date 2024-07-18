@@ -56,11 +56,11 @@ const getOrder=async()=>{
         const order=await Orders.find({user:userId});
 
 
-        if (!orders) {
+        if (!order) {
             return res.status(404).json({ message: "No orders found" });
         }
 
-        res.status(200).json(orders);
+        res.status(200).json(order);
         
     } catch (error) {
         console.error("Error placing order:", error);
