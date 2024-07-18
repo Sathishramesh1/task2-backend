@@ -23,14 +23,14 @@ router.route('/placeorder').post(placeOrder);
 
 router.route('/create-checkout-session').post(async (req, res) => {
 
-    const { amount ,email} = req.body;
+    const { amount } = req.body;
 
     
     const amountInCents = Math.round(amount);
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-customer_email: email,
+customer_email: req.user.email,
     submit_type: 'donate',
     billing_address_collection: 'auto',
     shipping_address_collection: {
