@@ -3,34 +3,40 @@ import { Orders } from '../model/Order.js';
 
 
 
-
-//function place order
 const placeOrder = async (req, res) => {
-    
     try {
-       //getting _id from middleware
         const userId = req.user._id; 
-        const cart = await Cart.findOne({ user: userId }).populate('items');
+        const cart = await Cart.findOne({ user: userId }).populate('items.product');
 
         if (!cart || cart.items.length === 0) {
             return res.status(400).json({ message: "Cart is empty or not found" });
         }
 
-        // creating new order
+        // Create array of items for the order
+        const items = cart.items.map(item => ({
+            product: {
+                id: item.product._id,
+                image: item.product.image,
+                title: item.product.title,
+                price: item.product.price,
+                description: item.product.description,
+                rating: item.product.rating
+            },
+            quantity: item.quantity,
+            totalPrice: item.quantity * item.product.price 
+        }));
+
+        // Create a new order document
         const newOrder = new Orders({
             user: userId,
-            items:cart.items.map(item => ({
-                product: item.product._id,
-                quantity: item.quantity,
-                price: item.product.price 
-            })),
-            totalAmount: cart.totalAmount,
-            
+            items,
+            totalAmount: cart.totalAmount 
         });
 
-        await newOrder.save(); 
+        // Save the new order to db
+        await newOrder.save();
 
-        //clearing the cart
+        // Clear the cart after placing order
         await Cart.findOneAndDelete({ user: userId });
 
         return res.status(201).json({ message: "Order placed successfully", order: newOrder });
