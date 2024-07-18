@@ -49,11 +49,11 @@ const placeOrder = async (req, res) => {
 export { placeOrder };
 
 
-const getOrder=async()=>{
+const getOrder=async(res,req)=>{
     try {
 
         const userId = req.user._id; 
-        const order=await Orders.find({user:userId});
+        const order= await Orders.find({user:userId});
 
 
         if (!order) {
