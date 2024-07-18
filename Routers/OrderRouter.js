@@ -26,7 +26,7 @@ router.route('/create-checkout-session').post(async (req, res) => {
     const { amount } = req.body;
 
     
-    
+    const amountInCents = Math.round(amount);
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -39,7 +39,7 @@ router.route('/create-checkout-session').post(async (req, res) => {
               product_data: {
                 name: "sample_data", 
               },
-              unit_amount: amount, 
+              unit_amount: amountInCents, 
             },
             quantity:  1, 
           },
