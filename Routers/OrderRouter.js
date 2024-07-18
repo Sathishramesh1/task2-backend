@@ -23,7 +23,7 @@ router.route('/placeorder').post(placeOrder);
 
 router.route('/create-checkout-session').post(async (req, res) => {
 
-    const { amount,address } = req.body;
+    const { amount } = req.body;
 
     
     
@@ -42,20 +42,6 @@ router.route('/create-checkout-session').post(async (req, res) => {
             quantity:  1, 
           },
       ],
-      shipping_address_collection: {
-        allowed_countries: ['US', 'CA'], 
-    },
-    shipping: {
-        name: 'Customer Name',
-        address: {
-            line1: address.line1,
-            line2: address.line2,
-            city: address.city,
-            state: address.state,
-            postal_code: address.postal_code,
-            country: address.country,
-        },
-    },
       mode: 'payment',
       ui_mode: 'embedded',
       return_url: `${YOUR_DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
