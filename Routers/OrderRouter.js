@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import express from 'express';
 import {Cart} from '../model/Cart.js'
-import { placeOrder } from '../Controllers/OrderController.js';
+import { getOrder, placeOrder } from '../Controllers/OrderController.js';
 import dotenv from 'dotenv'
 
 
@@ -76,6 +76,8 @@ router.route('/create-checkout-session').post(async (req, res) => {
 )
   
 
+
+router.route("/order-history").get(getOrder);
 
 
 

@@ -47,3 +47,26 @@ const placeOrder = async (req, res) => {
 };
 
 export { placeOrder };
+
+
+const getOrder=async()=>{
+    try {
+
+        const userId = req.user._id; 
+        const order=await Orders.find({user:userId});
+
+
+        if (!orders) {
+            return res.status(404).json({ message: "No orders found" });
+        }
+
+        res.status(200).json(orders);
+        
+    } catch (error) {
+        console.error("Error placing order:", error);
+        return res.status(500).json({ message: "Internal server error" });
+        
+    }
+}
+
+export {getOrder}
