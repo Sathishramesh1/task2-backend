@@ -106,7 +106,7 @@ export {GetCart}
 const RemoveFromCart = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { itemId } = req.body; 
+        const { itemId } = req.query;
 
         // Find the cart for the user
         const cart = await Cart.findOne({ user: userId });
