@@ -108,7 +108,7 @@ const RemoveFromCart = async (req, res) => {
         const userId = req.user._id;
         const itemId = req.query.itemId; 
 
-        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+        if (!itemId) {
             return res.status(400).json({ message: "Invalid item ID" });
         }
 
@@ -121,7 +121,7 @@ const RemoveFromCart = async (req, res) => {
 
         // Remove the item from the cart's items array
         const initialItemCount = cart.items.length;
-        cart.items = cart.items.filter(item => item.product.id.toString() !== itemId);
+        cart.items = cart.items.filter(item => item.product.id !== itemId);
 
         if (cart.items.length === initialItemCount) {
             return res.status(404).json({ message: "Item not found in cart" });
