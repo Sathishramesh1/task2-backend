@@ -106,9 +106,9 @@ export {GetCart}
 const RemoveFromCart = async (req, res) => {
     try {
         const userId = req.user._id;
-        const itemId = req.query.itemId; 
+        const itemId = Number(req.query.itemId); 
 
-        if (!itemId) {
+        if (isNaN(itemId)) {
             return res.status(400).json({ message: "Invalid item ID" });
         }
 
