@@ -106,7 +106,11 @@ export {GetCart}
 const RemoveFromCart = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { itemId } = req.query;
+        const itemId = req.query.itemId; 
+
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).json({ message: "Invalid item ID" });
+        }
 
         // Find the cart for the user
         const cart = await Cart.findOne({ user: userId });
@@ -116,9 +120,14 @@ const RemoveFromCart = async (req, res) => {
         }
 
         // Remove the item from the cart's items array
-        cart.items = cart.items.filter(item => item.product.id !== itemId);
+        const initialItemCount = cart.items.length;
+        cart.items = cart.items.filter(item => item.product.id.toString() !== itemId);
 
-        
+        if (cart.items.length === initialItemCount) {
+            return res.status(404).json({ message: "Item not found in cart" });
+        }
+
+        // Recalculate totalAmount if needed
         await cart.save();
 
         return res.status(200).json({ message: "Item removed from cart", cart });
@@ -128,6 +137,4 @@ const RemoveFromCart = async (req, res) => {
     }
 };
 
-export {  RemoveFromCart };
-
-
+export { RemoveFromCart };
